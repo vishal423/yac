@@ -1,2 +1,2 @@
-# yac
+# YAC
 Yet Another Codegen
