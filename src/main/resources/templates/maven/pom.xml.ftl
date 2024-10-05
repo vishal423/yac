@@ -8,27 +8,18 @@
 		<version>3.3.4</version>
 		<relativePath/>
 	</parent>
-	<groupId>tech.yac</groupId>
-	<artifactId>yac</artifactId>
+  <groupId>${application.rootPackage}</groupId>
+  <artifactId>${name}</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>yac</name>
-	<description>Yet Another Codegen for Java Applications</description>
+	<name>${name}</name>
+	<description>YAC Java Application</description>
+
 	<properties>
 		<java.version>23</java.version>
-    <picocli.version>4.7.6</picocli.version>
 	</properties>
+
 	<dependencies>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-freemarker</artifactId>
-		</dependency>
-    <dependency>
-      <groupId>info.picocli</groupId>
-      <artifactId>picocli-spring-boot-starter</artifactId>
-      <version>${picocli.version}</version>
-    </dependency>
-
-    <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
