@@ -24,6 +24,14 @@ public interface YacTemplateConfig {
         addTemplateFile(path, name, DEFAULT_TEMPLATE_EXTENSION);
     }
 
+    default void addNestedTemplateFile(String srcPath, String srcName, String destPath, String destName) {
+        addTemplateFile(srcPath, srcName, destPath, destName, DEFAULT_TEMPLATE_EXTENSION);
+    }
+
+    default void addTemplateFile(String srcPath, String srcName, String destPath, String destName, String templateExtension) {
+        getTemplates().put(file(srcName, templateExtension).parent(srcPath), file(destName).parent(destPath));
+    }
+
     default void addTemplateFile(String path, String name, String templateExtension) {
         getTemplates().put(file(name, templateExtension).parent(path), file(name).parent(path));
     }
@@ -39,5 +47,4 @@ public interface YacTemplateConfig {
     default void addExecutableFile(String name) {
         getTemplates().put(file(name), file(name).executable());
     }
-
 }

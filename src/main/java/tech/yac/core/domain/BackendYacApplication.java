@@ -11,7 +11,6 @@ import tech.yac.core.domain.build.BuildToolType;
 public abstract class BackendYacApplication implements YacApplication {
     private BuildTool buildTool;
     private String rootPackage;
-    // private Dependencies dependencies;
 
     @Override
     public ApplicationType getType() {
@@ -29,6 +28,10 @@ public abstract class BackendYacApplication implements YacApplication {
 
     public String getRootPackage() {
         return this.rootPackage;
+    }
+
+    public String getRootPackagePath() {
+        return this.rootPackage.replace('.', '/');
     }
 
     public void setBuildTool(BuildTool buildTool) {

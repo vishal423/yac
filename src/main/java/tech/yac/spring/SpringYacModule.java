@@ -32,6 +32,8 @@ public class SpringYacModule extends CoreYacModule {
         System.out.println("Configure spring module options ...");
         configureParentDependency(application);
 
+        configureDependencies(application);
+
         configureTestDependency(application);
 
         configurePlugins(application);
@@ -49,6 +51,13 @@ public class SpringYacModule extends CoreYacModule {
                 System.out.println("Configure default parent dependency ...");
                 buildTool.setParent(new Dependency("org.springframework.boot",  "spring-boot-starter-parent", new Version(3, 3, 4)));
             }
+        }
+    }
+
+    private void configureDependencies(Application application) {
+        if(application.getApplication().getBuildTool() instanceof MavenBuildTool buildTool) {
+            System.out.println("Configure spring web dependency ...");
+            buildTool.addDependency(new Dependency("org.springframework.boot",  "spring-boot-starter-web"));
         }
     }
 

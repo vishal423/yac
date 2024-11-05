@@ -10,8 +10,8 @@
 		<relativePath/>
 	</parent>
 </#if>
-  <groupId>${application.rootPackage}</groupId>
-  <artifactId>${name}</artifactId>
+	<groupId>${application.rootPackage}</groupId>
+	<artifactId>${name}</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>${name}</name>
 	<description>YAC Java Application</description>
@@ -23,15 +23,25 @@
 	<dependencies>
 <#list application.buildTool.dependencies as dependency>
 		<dependency>
-      <groupId>${dependency.group}</groupId>
+			<groupId>${dependency.group}</groupId>
 			<artifactId>${dependency.artifact}</artifactId>
 <#if dependency.version??>
 			<version>${dependency.version}</version>
 </#if>
-<#if dependency.scope??>
-			<scope>${dependency.scope}</scope>
-</#if>
 		</dependency>
+</#list>
+<#list application.buildTool.testDependencies>
+
+<#items as dependency>
+		<dependency>
+			<groupId>${dependency.group}</groupId>
+			<artifactId>${dependency.artifact}</artifactId>
+<#if dependency.version??>
+			<version>${dependency.version}</version>
+</#if>
+			<scope>${dependency.scope}</scope>
+		</dependency>
+</#items>
 </#list>
 	</dependencies>
 
@@ -39,8 +49,8 @@
 		<plugins>
 <#list application.buildTool.plugins as plugin>
 			<plugin>
-        <groupId>${plugin.group}</groupId>
-			  <artifactId>${plugin.artifact}</artifactId>
+				<groupId>${plugin.group}</groupId>
+				<artifactId>${plugin.artifact}</artifactId>
 			</plugin>
 </#list>
 		</plugins>

@@ -76,6 +76,10 @@ public class MavenBuildTool implements BuildTool {
         return dependencies.getDependencies();
     }
 
+    public Set<Dependency> getTestDependencies() {
+        return dependencies.getTestDependencies();
+    }
+
     public Set<Plugin> getPlugins() {
         return plugins.getPlugins();
     }
