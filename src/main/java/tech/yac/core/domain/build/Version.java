@@ -1,4 +1,4 @@
-package tech.yac.core.domain;
+package tech.yac.core.domain.build;
 
 public class Version {
     private int major;
@@ -8,6 +8,12 @@ public class Version {
     public Version(int major, int minor) {
         this.major = major;
         this.minor = minor;
+    }
+
+    public Version(int major, int minor, int patch) {
+        this.major = major;
+        this.minor = minor;
+        this.patch = patch;
     }
 
     @Override

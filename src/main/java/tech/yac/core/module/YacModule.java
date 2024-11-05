@@ -11,6 +11,8 @@ public interface YacModule {
 
     YacModule composeWith(YacModule module);
 
+    void configureOptions(Application application);
+
     void dryRun(Application application);
 
     void run(Application application);

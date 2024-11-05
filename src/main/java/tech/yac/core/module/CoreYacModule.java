@@ -63,24 +63,33 @@ public abstract class CoreYacModule implements YacModule {
         return this;
     }
 
-    protected abstract YacTemplateConfig configure(Application application);
+    protected abstract void configureModuleOptions(Application application);
+
+    @Override
+    public void configureOptions(Application application) {
+        configureModuleOptions(application);
+        for(YacModule module: modules) {
+            module.configureOptions(application);
+        }
+    }
+
+    protected abstract YacTemplateConfig configureTemplates(Application application);
 
     @Override
     public void dryRun(Application application) {
         for(YacModule module: modules) {
             module.dryRun(application);
         }
-        YacTemplateConfig templateConfig = configure(application);
+        YacTemplateConfig templateConfig = configureTemplates(application);
         doDryRun(templateConfig, application);
     }
 
     @Override
     public void run(Application application) {
-
         for(YacModule module: modules) {
             module.run(application);
         }
-        YacTemplateConfig templateConfig = configure(application);
+        YacTemplateConfig templateConfig = configureTemplates(application);
         doRun(templateConfig, application);
     }
 

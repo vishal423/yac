@@ -17,7 +17,7 @@ public class ApplicationYacModuleFactory implements YacModuleFactory {
     private YacTemplateServiceFactory templateServiceFactory;
     private YacFileServiceFactory fileServiceFactory;
     private BuildYacModuleFactory buildModuleFactory;
-    
+
     public ApplicationYacModuleFactory(
         YacTemplateServiceFactory templateServiceFactory, YacFileServiceFactory fileServiceFactory,
         BuildYacModuleFactory buildModuleFactory) {

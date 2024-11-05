@@ -21,6 +21,13 @@ public class RootYacModule implements YacModule {
     }
 
     @Override
+    public void configureOptions(Application application) {
+        for(YacModule module: modules) {
+            module.configureOptions(application);
+        }
+    }
+
+    @Override
     public void dryRun(Application application) {
         for(YacModule module: modules) {
             module.dryRun(application);

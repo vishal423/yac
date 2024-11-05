@@ -2,12 +2,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+<#if application.buildTool.parent??>
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.3.4</version>
+		<groupId>${application.buildTool.parent.group}</groupId>
+		<artifactId>${application.buildTool.parent.artifact}</artifactId>
+		<version>${application.buildTool.parent.version}</version>
 		<relativePath/>
 	</parent>
+</#if>
   <groupId>${application.rootPackage}</groupId>
   <artifactId>${name}</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -15,23 +17,32 @@
 	<description>YAC Java Application</description>
 
 	<properties>
-		<java.version>23</java.version>
+		<java.version>17</java.version>
 	</properties>
 
 	<dependencies>
+<#list application.buildTool.dependencies as dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
+      <groupId>${dependency.group}</groupId>
+			<artifactId>${dependency.artifact}</artifactId>
+<#if dependency.version??>
+			<version>${dependency.version}</version>
+</#if>
+<#if dependency.scope??>
+			<scope>${dependency.scope}</scope>
+</#if>
 		</dependency>
+</#list>
 	</dependencies>
 
 	<build>
 		<plugins>
+<#list application.buildTool.plugins as plugin>
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
+        <groupId>${plugin.group}</groupId>
+			  <artifactId>${plugin.artifact}</artifactId>
 			</plugin>
+</#list>
 		</plugins>
 	</build>
 

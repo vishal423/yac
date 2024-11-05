@@ -1,4 +1,4 @@
-package tech.yac.core.domain;
+package tech.yac.core.domain.build;
 
 /**
  * Supported Build Tools

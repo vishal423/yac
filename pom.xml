@@ -14,7 +14,7 @@
 	<name>yac</name>
 	<description>Yet Another Codegen for Java Applications</description>
 	<properties>
-		<java.version>23</java.version>
+		<java.version>17</java.version>
     <picocli.version>4.7.6</picocli.version>
 	</properties>
 	<dependencies>

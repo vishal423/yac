@@ -1,4 +1,4 @@
-package tech.yac.core.domain;
+package tech.yac.core.domain.build;
 
 /**
  * Represents a BuildTool instance supported by YAC
@@ -11,4 +11,6 @@ public interface BuildTool {
      * Build Tool type represented by an implementation
      */
     BuildToolType getType();
+
+    void addDependency(Dependency dependency);
 }

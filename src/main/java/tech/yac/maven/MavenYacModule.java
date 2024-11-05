@@ -20,7 +20,12 @@ public class MavenYacModule extends CoreYacModule {
     }
 
     @Override
-    protected YacTemplateConfig configure(Application application) {
+    protected void configureModuleOptions(Application application) {
+      // specify default options that are not explicitly configured
+    }
+
+    @Override
+    protected YacTemplateConfig configureTemplates(Application application) {
         System.out.println("Configure template files ...");
         return new MavenYacTemplateConfig(application);
     }

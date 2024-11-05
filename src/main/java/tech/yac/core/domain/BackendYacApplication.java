@@ -1,5 +1,8 @@
 package tech.yac.core.domain;
 
+import tech.yac.core.domain.build.BuildTool;
+import tech.yac.core.domain.build.BuildToolType;
+
 /**
  * Represents a backend server side Java application
  *

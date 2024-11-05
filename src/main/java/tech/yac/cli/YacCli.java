@@ -58,6 +58,7 @@ public class YacCli implements Callable<Integer> {
         application.setLocation(applicationLocationLog);
 
         YacModule rootModule = moduleFactory.getModuleGraph(application);
+        rootModule.configureOptions(application);
 
         if(dryRun) {
             rootModule.dryRun(application);
