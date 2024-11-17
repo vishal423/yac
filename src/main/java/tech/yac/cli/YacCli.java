@@ -27,6 +27,7 @@ import org.yaml.snakeyaml.nodes.Tag;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.Optional;
 import java.util.concurrent.Callable;
 
 import picocli.CommandLine.Command;
@@ -35,6 +36,7 @@ import picocli.CommandLine.Parameters;
 import tech.yac.core.domain.Application;
 import tech.yac.core.module.YacModule;
 import tech.yac.core.module.YacModuleFactory;
+import tech.yac.git.domain.GitVersionControl;
 import tech.yac.maven.domain.MavenBuildTool;
 import tech.yac.spring.domain.SpringYacApplication;
 
@@ -58,6 +60,7 @@ public class YacCli implements Callable<Integer> {
         Constructor constructor = new Constructor(Application.class, new LoaderOptions());
         constructor.addTypeDescription(new TypeDescription(MavenBuildTool.class, new Tag("!maven")));
         constructor.addTypeDescription(new TypeDescription(SpringYacApplication.class, new Tag("!spring")));
+        constructor.addTypeDescription(new TypeDescription(GitVersionControl.class, new Tag("!git")));
 
         Application application = null;
         Yaml yaml = new Yaml(constructor);
@@ -74,13 +77,16 @@ public class YacCli implements Callable<Integer> {
         System.out.println("Project to generate at -> " + applicationLocationLog);
         application.setLocation(applicationLocationLog);
 
-        YacModule rootModule = moduleFactory.getModuleGraph(application);
-        rootModule.configureOptions(application);
+        Optional<YacModule> rootModuleOptional = moduleFactory.getModuleGraph(application);
+        if(rootModuleOptional.isPresent()) {
+            YacModule rootModule = rootModuleOptional.get();
+            rootModule.configureOptions(application);
 
-        if(dryRun) {
-            rootModule.dryRun(application);
-        } else {
-            rootModule.run(application);
+            if(dryRun) {
+                rootModule.dryRun(application);
+            } else {
+                rootModule.run(application);
+            }
         }
 
         return 0;

@@ -19,11 +19,14 @@ package tech.yac.cli;
 
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 import tech.yac.application.ApplicationYacModuleFactory;
 import tech.yac.core.domain.Application;
 import tech.yac.core.module.RootYacModule;
 import tech.yac.core.module.YacModule;
 import tech.yac.core.module.YacModuleFactory;
+import tech.yac.scm.ScmYacModuleFactory;
 
 /**
  * YAC Module Factory
@@ -33,22 +36,32 @@ import tech.yac.core.module.YacModuleFactory;
 @Component
 public class RootYacModuleFactory implements YacModuleFactory {
     private ApplicationYacModuleFactory applicationModuleFactory;
+    private ScmYacModuleFactory scmModuleFactory;
 
-    public RootYacModuleFactory(ApplicationYacModuleFactory applicationModuleFactory) {
+    public RootYacModuleFactory(ApplicationYacModuleFactory applicationModuleFactory, ScmYacModuleFactory scmModuleFactory) {
         this.applicationModuleFactory = applicationModuleFactory;
+        this.scmModuleFactory = scmModuleFactory;
     }
 
-    public YacModule getModuleGraph(Application application) {
+    @Override
+    public Optional<YacModule> getModuleGraph(Application application) {
 
-        YacModule rootModule = getRootModule(application);
+        YacModule rootModule = getRootModule();
 
-        YacModule applicationModule = applicationModuleFactory.getModuleGraph(application);
-        rootModule.composeWith(applicationModule);
+        Optional<YacModule> applicationModule = applicationModuleFactory.getModuleGraph(application);
+        if(applicationModule.isPresent()) {
+            rootModule.composeWith(applicationModule.get());
+        }
 
-        return rootModule;
+        Optional<YacModule> scmModule = scmModuleFactory.getModuleGraph(application);
+        if(scmModule.isPresent()) {
+            rootModule.composeWith(scmModule.get());
+        }
+
+        return Optional.of(rootModule);
     }
 
-    private YacModule getRootModule(Application application) {
+    private YacModule getRootModule() {
         return new RootYacModule();
     }
 }

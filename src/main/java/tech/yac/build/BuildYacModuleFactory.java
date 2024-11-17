@@ -19,6 +19,8 @@ package tech.yac.build;
 
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 import tech.yac.core.domain.Application;
 import tech.yac.core.exception.YacException;
 import tech.yac.core.module.YacModule;
@@ -32,14 +34,14 @@ public class BuildYacModuleFactory implements YacModuleFactory {
 
     private YacTemplateServiceFactory templateServiceFactory;
     private YacFileServiceFactory fileServiceFactory;
-    
+
     public BuildYacModuleFactory(YacTemplateServiceFactory templateServiceFactory, YacFileServiceFactory fileServiceFactory) {
         this.templateServiceFactory = templateServiceFactory;
         this.fileServiceFactory = fileServiceFactory;
     }
 
-    public YacModule getModuleGraph(Application application) {
-        return getBuildModule(application);
+    public Optional<YacModule> getModuleGraph(Application application) {
+        return Optional.of(getBuildModule(application));
     }
 
     public YacModule getBuildModule(Application application) {

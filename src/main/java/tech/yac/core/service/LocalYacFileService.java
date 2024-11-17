@@ -36,6 +36,11 @@ public class LocalYacFileService implements YacFileService {
             }
 
             Path filePath = getFilePath(fileRoot, file);
+            if(file.getFile().isDirectory()) {
+                Files.createDirectories(filePath);
+                return;
+            }
+
             if(file.isBinary()) {
                 Files.write(filePath, file.getBinaryContent());
             } else {

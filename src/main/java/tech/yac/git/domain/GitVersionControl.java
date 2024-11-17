@@ -15,19 +15,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package tech.yac.core.module;
+package tech.yac.git.domain;
 
-import java.util.Optional;
+import tech.yac.core.domain.scm.ScmToolType;
+import tech.yac.core.domain.scm.VersionControl;
 
-import tech.yac.core.domain.Application;
+public class GitVersionControl implements VersionControl {
 
-/**
- * YAC Module lifecycle
-*
-* @author Vishal Mahajan
-*/
-public interface YacModuleFactory {
-
-    Optional<YacModule> getModuleGraph(Application application);
+    @Override
+    public ScmToolType getType() {
+        return ScmToolType.GIT;
+    }
 }
-

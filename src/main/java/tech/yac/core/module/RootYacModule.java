@@ -21,7 +21,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import tech.yac.core.domain.Application;
-import tech.yac.core.exception.YacException;
 
 public class RootYacModule implements YacModule {
 
@@ -29,11 +28,7 @@ public class RootYacModule implements YacModule {
 
     @Override
     public YacModule composeWith(YacModule module) {
-        if(modules.isEmpty()) {
-            modules.add(module);
-        } else {
-            throw new YacException("Root module cannot be composed with more than one application module");
-        }
+        modules.add(module);
         return this;
     }
 

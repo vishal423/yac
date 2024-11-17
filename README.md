@@ -8,6 +8,7 @@ YAC CLI supports application configuration in `yaml` format. Refer below example
 ```yaml
 !application
 name: YacBlog
+scm: !git {}
 application: !spring
   rootPackage: 'tech.yac.samples'
   buildTool: !maven

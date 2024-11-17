@@ -61,6 +61,24 @@ public interface YacTemplateConfig {
         getTemplates().put(file(name), file(name));
     }
 
+    default void addFile(String path, String name) {
+        getTemplates().put(file(name).parent(path), file(name).parent(path));
+    }
+
+    default void addFile(String srcPath, String srcName, String destPath, String destName) {
+        getTemplates().put(file(srcName).parent(srcPath), file(destName).parent(destPath));
+    }
+
+    default void addDirectory(String srcPath, String destPath, String name) {
+        getTemplates().put(file(name).parent(srcPath).directory(), file(name).parent(destPath).directory());
+    }
+
+    default void addFiles(String srcPath, String destPath, String... names) {
+        for(String name: names) {
+            getTemplates().put(file(name).parent(srcPath), file(name).parent(destPath));
+        }
+    }
+
     default void addExecutableFile(String name) {
         getTemplates().put(file(name), file(name).executable());
     }

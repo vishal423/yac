@@ -15,19 +15,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package tech.yac.core.module;
-
-import java.util.Optional;
-
-import tech.yac.core.domain.Application;
+package tech.yac.core.domain.scm;
 
 /**
- * YAC Module lifecycle
+ * Supported Source Code Management tools
 *
 * @author Vishal Mahajan
 */
-public interface YacModuleFactory {
-
-    Optional<YacModule> getModuleGraph(Application application);
+public enum ScmToolType {
+    GIT, MERCURIAL;
 }
 

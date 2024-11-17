@@ -42,7 +42,7 @@ public abstract class CoreYacModule implements YacModule {
     private YacTemplateServiceFactory templateServiceFactory;
     private YacFileServiceFactory fileServiceFactory;
 
-    public CoreYacModule(YacTemplateServiceFactory templateServiceFactory,
+    protected CoreYacModule(YacTemplateServiceFactory templateServiceFactory,
         YacFileServiceFactory fileServiceFactory) {
 
         this.templateServiceFactory = templateServiceFactory;

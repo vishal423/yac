@@ -23,6 +23,10 @@ public class YacFileContent {
     private byte[] binaryContent;
     private boolean binary;
 
+    public YacFileContent(YacFile file) {
+        this.file = file;
+    }
+
     public YacFileContent(YacFile file, String content) {
         this.file = file;
         this.content = content;

@@ -17,6 +17,8 @@
  */
 package tech.yac.core.domain;
 
+import tech.yac.core.domain.scm.VersionControl;
+
 /**
  * Represents YAC Application.
  *
@@ -27,6 +29,7 @@ public class Application {
     private String name;
     private String location;
     private YacApplication application;
+    private VersionControl scm;
 
     public void setName(String name) {
         this.name = name;
@@ -50,5 +53,13 @@ public class Application {
 
     public YacApplication getApplication() {
         return application;
+    }
+
+    public void setScm(VersionControl scm) {
+        this.scm = scm;
+    }
+
+    public VersionControl getScm() {
+        return scm;
     }
 }

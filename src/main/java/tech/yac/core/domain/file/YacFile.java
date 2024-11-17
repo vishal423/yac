@@ -23,6 +23,7 @@ public class YacFile {
     private Optional<String> path = Optional.empty();
     private String name;
     private YacFilePermission permission;
+    private boolean directory;
 
     YacFile(String name) {
         this.name = name;
@@ -43,6 +44,11 @@ public class YacFile {
         return this;
     }
 
+    public YacFile directory() {
+        this.directory = true;
+        return this;
+    }
+
     public String getName() {
         return name;
     }
@@ -53,6 +59,10 @@ public class YacFile {
 
     public boolean isExecutable() {
         return permission.isExecute();
+    }
+
+    public boolean isDirectory() {
+        return this.directory;
     }
 }
 

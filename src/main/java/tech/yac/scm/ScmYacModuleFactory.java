@@ -15,61 +15,45 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package tech.yac.application;
+package tech.yac.scm;
 
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
-import tech.yac.build.BuildYacModuleFactory;
 import tech.yac.core.domain.Application;
 import tech.yac.core.exception.YacException;
 import tech.yac.core.module.YacModule;
 import tech.yac.core.module.YacModuleFactory;
 import tech.yac.core.service.YacFileServiceFactory;
 import tech.yac.core.service.YacTemplateServiceFactory;
-import tech.yac.spring.SpringYacModule;
+import tech.yac.git.GitYacModule;
 
 @Component
-public class ApplicationYacModuleFactory implements YacModuleFactory {
+public class ScmYacModuleFactory implements YacModuleFactory {
 
     private YacTemplateServiceFactory templateServiceFactory;
     private YacFileServiceFactory fileServiceFactory;
-    private BuildYacModuleFactory buildModuleFactory;
 
-    public ApplicationYacModuleFactory(
-        YacTemplateServiceFactory templateServiceFactory, YacFileServiceFactory fileServiceFactory,
-        BuildYacModuleFactory buildModuleFactory) {
+    public ScmYacModuleFactory(YacTemplateServiceFactory templateServiceFactory, YacFileServiceFactory fileServiceFactory) {
         this.templateServiceFactory = templateServiceFactory;
         this.fileServiceFactory = fileServiceFactory;
-        this.buildModuleFactory = buildModuleFactory;
     }
 
+    @Override
     public Optional<YacModule> getModuleGraph(Application application) {
-        YacModule applicationModule = getApplicationModule(application);
-
-        Optional<YacModule> buildModule = buildModuleFactory.getModuleGraph(application);
-        if(buildModule.isPresent()) {
-            applicationModule.composeWith(buildModule.get());
-        }
-
-        return Optional.of(applicationModule);
+        return getScmModule(application);
     }
 
-    private YacModule getApplicationModule(Application application) {
+    public Optional<YacModule> getScmModule(Application application) {
 
-        if(application.getApplication() == null) {
-            throw new YacException("Application configuration missing");
+        if(application.getScm() == null) {
+            return Optional.empty();
         }
 
-        switch(application.getApplication().getType()) {
-            case BACKEND:
-                switch(application.getApplication().getFrameworkType()) {
-                    case SPRING:
-                        return new SpringYacModule(templateServiceFactory, fileServiceFactory);
-                    default:
-                        throw new YacException("not supported");
-                }
+        switch(application.getScm().getType()) {
+            case GIT:
+                return Optional.of(new GitYacModule(templateServiceFactory, fileServiceFactory));
             default:
                 throw new YacException("not supported");
         }

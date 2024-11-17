@@ -15,19 +15,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package tech.yac.core.module;
+package tech.yac.git.config;
 
-import java.util.Optional;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 
-import tech.yac.core.domain.Application;
+import tech.yac.core.service.YacFileServiceFactory;
+import tech.yac.core.service.YacTemplateServiceFactory;
+import tech.yac.git.GitYacModule;
 
-/**
- * YAC Module lifecycle
-*
-* @author Vishal Mahajan
-*/
-public interface YacModuleFactory {
+@Configuration
+class GitYacModuleConfig {
 
-    Optional<YacModule> getModuleGraph(Application application);
+    @Bean
+    @Scope("prototype")
+    GitYacModule gitYacModule(YacTemplateServiceFactory templateServiceFactory, YacFileServiceFactory fileServiceFactory) {
+        return new GitYacModule(templateServiceFactory, fileServiceFactory);
+    }
 }
 

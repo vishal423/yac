@@ -19,7 +19,6 @@ package tech.yac.core.service;
 
 import org.springframework.core.io.ClassPathResource;
 
-import java.io.IOException;
 import java.nio.file.Paths;
 
 import tech.yac.core.domain.YacTemplateModel;
@@ -31,6 +30,10 @@ public class NoopYacTemplateService implements YacTemplateService {
     @Override
     public YacFileContent process(YacTemplateModel templateModel) throws YacTemplateException {
         try {
+            if(templateModel.getSource().isDirectory()) {
+                return new YacFileContent(templateModel.getDestination());
+
+            }
             return new YacFileContent(templateModel.getDestination(),
                 getTemplatePath(templateModel).getContentAsByteArray());
         } catch(Exception exception) {
@@ -38,13 +41,13 @@ public class NoopYacTemplateService implements YacTemplateService {
         }
     }
 
-    private ClassPathResource getTemplatePath(YacTemplateModel templateModel) throws IOException {
+    private ClassPathResource getTemplatePath(YacTemplateModel templateModel) {
         if(templateModel.getSource().getPath().isPresent()) {
-        return new ClassPathResource(
-            Paths.get("templates",
-                templateModel.getTemplateRoot(),
-                templateModel.getSource().getPath().get(),
-                templateModel.getSource().getName()).toString());
+            return new ClassPathResource(
+                Paths.get("templates",
+                    templateModel.getTemplateRoot(),
+                    templateModel.getSource().getPath().get(),
+                    templateModel.getSource().getName()).toString());
         }
         return new ClassPathResource(
             Paths.get("templates",
